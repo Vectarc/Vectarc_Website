@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Grotesk:wght@300..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 39 25% 92%; /* Lighter Khakibeige */
+    --foreground: 180 69% 10%; /* Dark Pine Teal */
+
+    --card: 39 30% 96%; /* Very Light Card Beige */
+    --card-foreground: 180 69% 10%;
+
+    --popover: 39 30% 96%;
+    --popover-foreground: 180 69% 10%;
+
+    --primary: 180 69% 15%; /* Pine Teal */
+    --primary-foreground: 39 25% 92%;
+
+    --secondary: 36 21% 82%; /* Slightly Darker Khakibeige */
+    --secondary-foreground: 180 69% 10%;
+
+    --muted: 36 15% 85%;
+    --muted-foreground: 180 30% 25%;
+
+    --accent: 180 69% 15%;
+    --accent-foreground: 39 25% 92%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 180 69% 10% / 0.15;
+    --input: 180 69% 10% / 0.15;
+    --ring: 180 69% 15%;
+
+    --radius: 0.5rem;
+
+    /* Custom tokens */
+    --hero-overlay: 180 69% 15%;
+    --section-alt: 36 21% 82%;
+    --highlight: 180 69% 15%;
+  }
+
+  .theme-light {
+    --background: 39 25% 92%;
+    --foreground: 180 69% 10%;
+
+    --card: 39 30% 96%;
+    --card-foreground: 180 69% 10%;
+
+    --primary: 180 69% 15%;
+    --primary-foreground: 39 25% 92%;
+
+    --secondary: 36 21% 82%;
+    --secondary-foreground: 180 69% 10%;
+
+    --border: 180 69% 10% / 0.15;
+    --input: 180 69% 10% / 0.15;
+    --ring: 180 69% 15%;
+
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  .theme-dark {
+    --background: 180 69% 10%; /* Dark Pine Teal */
+    --foreground: 39 25% 92%; /* Lighter Khakibeige */
+
+    --card: 39 25% 92%; /* Light Khakibeige card */
+    --card-foreground: 180 69% 10%;
+
+    --primary: 36 21% 77%; /* Saturated Khakibeige for Buttons */
+    --primary-foreground: 180 69% 10%;
+
+    --secondary: 180 50% 15%;
+    --secondary-foreground: 39 25% 92%;
+
+    --muted: 180 50% 15%;
+    --muted-foreground: 39 10% 75%;
+
+    --accent: 39 25% 92%;
+    --accent-foreground: 180 69% 10%;
+
+    --border: 39 25% 92% / 0.15;
+    --input: 39 25% 92% / 0.15;
+    --ring: 39 25% 92%;
+
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  .theme-white {
+    --background: 39 20% 98%; /* Almost White */
+    --foreground: 180 69% 10%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 180 69% 10%;
+    
+    --primary: 180 69% 15%;
+    --primary-foreground: 39 20% 98%;
+    
+    --border: 180 69% 10% / 0.1;
+    
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--primary)));
+  }
+
+  .section-padding {
+    @apply px-6 md:px-12 lg:px-20 xl:px-32;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(
+      to right,
+      hsl(var(--hero-overlay) / 0.92) 0%,
+      hsl(var(--hero-overlay) / 0.7) 50%,
+      hsl(var(--hero-overlay) / 0.3) 100%
+    );
+  }
+
+  /* Pro Developer Aesthetic Additions */
+  .grain {
+    position: fixed;
+    top: -150%;
+    left: -150%;
+    width: 300%;
+    height: 300%;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+    animation: grain 10s steps(10) infinite;
+  }
+
+  @keyframes grain {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -5%); }
+    20% { transform: translate(-10%, 5%); }
+    30% { transform: translate(5%, -10%); }
+    40% { transform: translate(-5%, 15%); }
+    50% { transform: translate(-10%, 5%); }
+    60% { transform: translate(15%, 0); }
+    70% { transform: translate(0, 10%); }
+    80% { transform: translate(-15%, 0); }
+    90% { transform: translate(10%, 5%); }
+    100% { transform: translate(5%, 0); }
+  }
+
+  .mask-reveal {
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    mask-size: 100% 200%;
+    mask-position: 0 100%;
+    transition: mask-position 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mask-reveal:hover {
+    mask-position: 0 0;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
+}

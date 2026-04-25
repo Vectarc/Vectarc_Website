@@ -84,7 +84,7 @@ export async function sendAdminNotification({ id, inquiryType, name, email, phon
   `;
 
   await transporter.sendMail({
-    from: `"${name}" <${email}>`,
+    from: `"Vectarc Notification" <${process.env.GMAIL_USER}>`,
     to: adminEmail,
     replyTo: email,
     subject: `[Vectarc] New ${inquiryType} enquiry from ${name}`,

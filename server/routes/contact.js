@@ -40,27 +40,32 @@ router.post("/", async (req, res) => {
   const submissionId = "SUB-" + Date.now();
   const submittedAt = new Date().toISOString();
 
-  Promise.allSettled([
-    sendAdminNotification({ 
-      id: submissionId, 
-      submittedAt: submittedAt, 
-      ...cleanData 
-    }),
-    sendSubmitterConfirmation(cleanData),
-  ]).then((results) => {
-    results.forEach((r, i) => {
-      if (r.status === "rejected") {
-        console.error(`[email] Email ${i === 0 ? "admin" : "confirmation"} failed:`, r.reason?.message);
-      }
-    });
-  });
+  try {
+    // We await these so we know if they actually sent successfully
+    await Promise.all([
+      sendAdminNotification({ 
+        id: submissionId, 
+        submittedAt: submittedAt, 
+        ...cleanData 
+      }),
+      sendSubmitterConfirmation(cleanData),
+    ]);
+    
+    console.log(`[contact] Emails sent successfully for ${submissionId}`);
 
-  // --- 2. Respond immediately ---
-  return res.status(201).json({
-    success: true,
-    message: "Your message has been received! We'll be in touch shortly.",
-    id: submissionId,
-  });
+    // --- 2. Respond only if successful ---
+    return res.status(201).json({
+      success: true,
+      message: "Your message has been received! We'll be in touch shortly.",
+      id: submissionId,
+    });
+
+  } catch (emailError) {
+    console.error("[contact] Email delivery failed:", emailError.message);
+    return res.status(500).json({ 
+      error: "We received your message but had trouble sending the notification. Don't worry, we'll check it soon!" 
+    });
+  }
 });
 
 export default router;

@@ -76,6 +76,7 @@ export const Chatbot = () => {
         text: "I'm opening the contact form for you now. Please fill in your details so we can assist you better."
       };
       setMessages((prev) => [...prev, promptMsg]);
+      setIsOpen(false); // Close chatbot so form is visible
       setIsContactOpen(true);
       return; // Stop here, don't call the AI API
     }
@@ -128,7 +129,7 @@ export const Chatbot = () => {
         </DialogContent>
       </Dialog>
 
-      <div className="fixed bottom-6 right-6 z-[9999]">
+      <div className="fixed bottom-6 right-6 z-[60]">
         <AnimatePresence>
           {isOpen && (
             <motion.div

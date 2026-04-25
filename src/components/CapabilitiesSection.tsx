@@ -55,7 +55,7 @@ const CapabilityCard = ({ phase, index }: { phase: typeof phases[0], index: numb
 
   return (
     <div 
-      className="relative w-full h-[480px] perspective-1000 group cursor-pointer"
+      className="relative w-full max-w-[300px] mx-auto md:max-w-none h-[380px] md:h-[480px] perspective-1000 group cursor-pointer"
       onMouseEnter={() => setIsFlipped(true)}
       onMouseLeave={() => setIsFlipped(false)}
       onClick={handleFlip}
@@ -80,15 +80,19 @@ const CapabilityCard = ({ phase, index }: { phase: typeof phases[0], index: numb
 
         {/* FRONT FACE */}
         <div 
-          className="absolute inset-0 w-full h-full bg-card border border-primary/10 rounded-3xl p-10 flex flex-col shadow-2xl overflow-hidden"
-          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+          className="absolute inset-0 w-full h-full bg-card border border-primary/10 rounded-3xl p-8 md:p-10 flex flex-col shadow-2xl overflow-hidden"
+          style={{ 
+            backfaceVisibility: "hidden", 
+            WebkitBackfaceVisibility: "hidden",
+            transform: "translateZ(1px)" 
+          }}
         >
           <div className="relative z-10 flex flex-col h-full text-card-foreground">
-            <div className={`w-20 h-20 rounded-2xl bg-card-foreground/5 text-card-foreground border border-card-foreground/10 flex items-center justify-center mb-10 transition-colors group-hover:bg-card-foreground/10 group-hover:border-card-foreground/20`}>
-              <Icon size={40} strokeWidth={1.5} />
+            <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-card-foreground/5 text-card-foreground border border-card-foreground/10 flex items-center justify-center mb-6 md:mb-10 transition-colors group-hover:bg-card-foreground/10 group-hover:border-card-foreground/20`}>
+              <Icon size={32} className="md:w-10 md:h-10" strokeWidth={1.5} />
             </div>
             
-            <h3 className="text-3xl md:text-4xl font-display font-bold text-card-foreground tracking-tighter leading-[1.1] mb-6">
+            <h3 className="text-2xl md:text-4xl font-display font-bold text-card-foreground tracking-tighter leading-[1.1] mb-6">
               {phase.title}
             </h3>
 
@@ -105,11 +109,11 @@ const CapabilityCard = ({ phase, index }: { phase: typeof phases[0], index: numb
 
         {/* BACK FACE */}
         <div 
-          className="absolute inset-0 w-full h-full bg-card border border-primary/10 rounded-3xl p-10 flex flex-col shadow-2xl overflow-hidden"
+          className="absolute inset-0 w-full h-full bg-card border border-primary/10 rounded-3xl p-8 md:p-10 flex flex-col shadow-2xl overflow-hidden"
           style={{ 
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
-            transform: "rotateY(180deg)"
+            transform: "rotateY(180deg) translateZ(1px)"
           }}
         >
           <div className="mb-8 flex items-center justify-between">

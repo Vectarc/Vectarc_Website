@@ -46,18 +46,23 @@ const phases = [
 ];
 
 const CapabilityCard = ({ phase, index }: { phase: typeof phases[0], index: number }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
   const Icon = phase.icon;
+
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);
+  };
 
   return (
     <div 
-      className="relative w-full h-[480px] perspective-1000 group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className="relative w-full h-[480px] perspective-1000 group cursor-pointer"
+      onMouseEnter={() => setIsFlipped(true)}
+      onMouseLeave={() => setIsFlipped(false)}
+      onClick={handleFlip}
     >
       <motion.div
         initial={false}
-        animate={{ rotateY: isHovered ? 180 : 0 }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ 
           type: "spring", 
           stiffness: 350, 
@@ -75,8 +80,8 @@ const CapabilityCard = ({ phase, index }: { phase: typeof phases[0], index: numb
 
         {/* FRONT FACE */}
         <div 
-          className="absolute inset-0 w-full h-full backface-hidden bg-card border border-primary/10 rounded-3xl p-10 flex flex-col shadow-2xl overflow-hidden"
-          style={{ backfaceVisibility: "hidden" }}
+          className="absolute inset-0 w-full h-full bg-card border border-primary/10 rounded-3xl p-10 flex flex-col shadow-2xl overflow-hidden"
+          style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
         >
           <div className="relative z-10 flex flex-col h-full text-card-foreground">
             <div className={`w-20 h-20 rounded-2xl bg-card-foreground/5 text-card-foreground border border-card-foreground/10 flex items-center justify-center mb-10 transition-colors group-hover:bg-card-foreground/10 group-hover:border-card-foreground/20`}>
@@ -88,7 +93,7 @@ const CapabilityCard = ({ phase, index }: { phase: typeof phases[0], index: numb
             </h3>
 
             <div className="mt-auto flex items-center justify-end text-card-foreground/60">
-              <div className="flex items-center gap-2 text-[10px] font-bold text-card-foreground tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
+              <div className={`flex items-center gap-2 text-[10px] font-bold text-card-foreground tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0 ${isFlipped ? 'pointer-events-none' : ''}`}>
                 Details <ChevronRight size={14} />
               </div>
             </div>
@@ -100,9 +105,10 @@ const CapabilityCard = ({ phase, index }: { phase: typeof phases[0], index: numb
 
         {/* BACK FACE */}
         <div 
-          className="absolute inset-0 w-full h-full backface-hidden bg-card border border-primary/10 rounded-3xl p-10 flex flex-col shadow-2xl overflow-hidden"
+          className="absolute inset-0 w-full h-full bg-card border border-primary/10 rounded-3xl p-10 flex flex-col shadow-2xl overflow-hidden"
           style={{ 
             backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(180deg)"
           }}
         >
@@ -118,7 +124,7 @@ const CapabilityCard = ({ phase, index }: { phase: typeof phases[0], index: numb
               <motion.div
                 key={item}
                 initial={{ opacity: 0, x: 20 }}
-                animate={isHovered ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                animate={isFlipped ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
                 transition={{ delay: i * 0.05 + 0.2 }}
                 className="flex items-start gap-3 text-sm text-card-foreground/80 group/item"
               >

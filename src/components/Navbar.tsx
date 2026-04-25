@@ -79,39 +79,63 @@ const Navbar = () => {
         </motion.button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu (Sidebar/Drawer) - MOVED OUTSIDE PADDING FOR FIXED POSITIONING */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-2xl border-b border-primary/10 section-padding py-10 flex flex-col gap-6 md:hidden overflow-hidden"
-          >
-            {navLinks.map((link, i) => (
-              <motion.a
-                key={link.label}
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: i * 0.1 }}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="text-2xl font-display font-black tracking-tight text-foreground/70 hover:text-primary transition-colors"
-              >
-                {link.label}
-              </motion.a>
-            ))}
-            <motion.a
-              href="#contact"
+          <div className="fixed inset-0 z-[9999] md:hidden">
+            {/* Backdrop Overlay */}
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="mt-4 text-center py-5 bg-primary text-primary-foreground font-display font-black tracking-widest uppercase rounded-2xl"
+              className="absolute inset-0 bg-background/60 backdrop-blur-sm"
+            />
+            
+            {/* Floating Sidebar Panel */}
+            <motion.div
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-4 right-4 w-[75%] max-w-[280px] bg-card border border-primary/10 z-[70] md:hidden shadow-2xl p-8 pt-16 flex flex-col gap-6 rounded-3xl"
             >
-              Get Started
-            </motion.a>
-          </motion.div>
+              {/* Close Button Inside Sidebar */}
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="absolute top-6 right-6 text-foreground/60 hover:text-foreground"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="flex flex-col gap-4">
+                {navLinks.map((link, i) => (
+                  <motion.a
+                    key={link.label}
+                    initial={{ x: 10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.1 + i * 0.1 }}
+                    href={link.href}
+                    onClick={() => setTimeout(() => setIsOpen(false), 200)}
+                    className="text-2xl font-display font-black tracking-tight text-foreground hover:text-primary transition-colors py-2"
+                  >
+                    {link.label}
+                  </motion.a>
+                ))}
+              </div>
+              
+              <motion.a
+                href="#contact"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                onClick={() => setTimeout(() => setIsOpen(false), 200)}
+                className="mt-2 text-center py-5 bg-primary text-primary-foreground font-display font-black text-[10px] tracking-[0.4em] uppercase rounded-xl"
+              >
+                Connect
+              </motion.a>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </nav>

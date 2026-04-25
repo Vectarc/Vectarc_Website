@@ -128,16 +128,22 @@ export const Chatbot = () => {
         </DialogContent>
       </Dialog>
 
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-6 right-6 z-[9999]">
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="mb-4"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:relative md:inset-auto md:z-auto md:p-0 md:mb-4"
             >
-              <Card className="w-[350px] sm:w-[400px] h-[500px] flex flex-col shadow-2xl border-white/10 glass">
+              {/* Mobile Backdrop */}
+              <div 
+                className="absolute inset-0 bg-background/60 backdrop-blur-sm md:hidden"
+                onClick={() => setIsOpen(false)}
+              />
+              
+              <Card className="relative z-10 w-full max-w-[400px] h-[80vh] md:h-[500px] flex flex-col shadow-2xl border-white/10 glass">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
                   <CardTitle className="text-lg font-bold flex items-center gap-2">
                     <Bot className="w-5 h-5 text-primary" />

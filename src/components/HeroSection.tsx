@@ -14,13 +14,13 @@ const HeroSection = () => {
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center overflow-hidden">
+    <section ref={containerRef} className="relative min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
       {/* Background image with subtle technical overlay */}
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
         <img
           src={heroBg}
           alt="Technical engineering facility"
-          className="w-full h-full object-cover scale-105 opacity-100"
+          className="w-full h-full object-cover object-center scale-105 opacity-100"
         />
         <div className="absolute inset-0 bg-background/30 backdrop-blur-[1px]" />
       </motion.div>

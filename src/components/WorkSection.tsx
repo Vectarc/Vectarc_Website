@@ -3,11 +3,11 @@ import aboutBg from "@/assets/about-bg.jpg";
 
 const WorkSection = () => {
   return (
-    <section id="work" className="relative py-32 md:py-44 overflow-hidden">
+    <section id="work" className="relative min-h-[500px] md:py-44 flex items-center overflow-hidden">
       <motion.img
         src={aboutBg}
         alt="Engineering workbench"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-center"
         loading="lazy"
         width={1920}
         height={1080}

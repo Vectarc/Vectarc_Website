@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
     // --- 2. Respond only if successful ---
     return res.status(201).json({
       success: true,
-      message: "Your message has been received! We'll be in touch shortly.",
+      message: "Thank you for reaching out! We have received your message and will get back to you as soon as possible.",
       id: submissionId,
     });
 

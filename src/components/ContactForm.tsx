@@ -53,7 +53,7 @@ const ContactForm = ({ onSuccess, onError, className }: ContactFormProps) => {
       toast.success(data.message || "Thank you! We'll be in touch shortly.");
       setFormData(INITIAL_FORM);
       if (onSuccess) onSuccess();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Contact form error:", err);
       const errorMsg = "Could not reach the server. Please check your connection and try again.";
       toast.error(errorMsg);
